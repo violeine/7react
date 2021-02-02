@@ -3,6 +3,7 @@ import "./App.css";
 import { Counter } from "./Counter.js";
 import { TempConv } from "./TempConv.js";
 import { BookFlight } from "./BookFlight.js";
+import { Timer } from "./Timer.js";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Counter />
       <TempConv />
       <BookFlight />
+      <Timer />
     </div>
   );
 }
