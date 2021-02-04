@@ -5,6 +5,7 @@ import { TempConv } from "./TempConv.js";
 import { BookFlight } from "./BookFlight.js";
 import { Timer } from "./Timer.js";
 import { Crud } from "./Crud.js";
+import { CircleDraw } from "./CircleDraw.js";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <BookFlight />
       <Timer />
       <Crud />
+      <CircleDraw />
     </div>
   );
 }
