@@ -23,15 +23,15 @@ export function Timer() {
 
   useEffect(() => {
     if (time >= max) {
-      setTime((time) => Number(max));
-    } else setTime((time) => realTime);
+      setTime(() => Number(max));
+    } else setTime(() => realTime);
   }, [realTime, time, max]);
 
   useEffect(() => {
     if (realTime === 30000) {
       clearInterval(id);
     }
-  }, [realTime]);
+  }, [realTime, id]);
   return (
     <div>
       <progress

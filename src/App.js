@@ -6,6 +6,7 @@ import { BookFlight } from "./BookFlight.js";
 import { Timer } from "./Timer.js";
 import { Crud } from "./Crud.js";
 import { CircleDraw } from "./CircleDraw.js";
+import { Cells } from "./Cells.js";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Timer />
       <Crud />
       <CircleDraw />
+      <Cells />
     </div>
   );
 }
