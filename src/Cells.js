@@ -45,26 +45,41 @@ function Cell({ row, col, cells, setCells }) {
   }
 
   useEffect(() => {
-    console.log(col, row, raw);
-    const a = parseRaw(raw);
-    if (!a.isFormular) {
-      const temp = JSON.parse(JSON.stringify(cells));
-      temp[col][row] = a.str;
-      setCells(temp);
+    if (raw) {
+      const a = parseRaw(raw);
+      if (!a.isFormular) {
+        const temp = JSON.parse(JSON.stringify(cells));
+        temp[col][row] = a.str;
+        setCells(temp);
+      }
+      setFormula(a);
     }
-    setFormula(a);
   }, [raw]);
 
-  // useEffect(() => {
-  //   if (formula.isFormular) {
-  //     // create new deps,
-  //     // check if deps change
-  // set new deps
-  // updateCells
-  // , else do nothing?
-
-  //   }
-  // }, [cells, formular]);
+  useEffect(() => {
+    if (formula && formula.isFormular) {
+      // create new deps,
+      const newDeps = formula.str
+        .map((el) => {
+          const col = el[0].charCodeAt(0) - 65;
+          const row = +el.substring(1);
+          return [col, row];
+        })
+        .map(([col, row]) => Number(cells[col][row]));
+      // check if deps change
+      if (JSON.stringify(deps) === JSON.stringify(newDeps)) {
+        // , else do nothing?
+        return;
+      } else {
+        // set new deps
+        // updateCells
+        const temp = JSON.parse(JSON.stringify(cells));
+        temp[col][row] = newDeps.reduce((el, acc) => el + acc, 0);
+        setCells(temp);
+        setDeps(newDeps);
+      }
+    } else return;
+  }, [cells, formula]);
   function handleChange(e) {
     setInput(e.target.value);
   }
@@ -101,8 +116,16 @@ function Cell({ row, col, cells, setCells }) {
 }
 
 function parseRaw(str) {
-  return {
-    isFormular: false,
-    str: str,
-  };
+  // start with [A1, A2, A3] or [A2:B2] [A1]
+  if (str[0] == "[" && str[str.length - 1] == "]") {
+    const t = str.substring(1, str.length - 1);
+    if (t.includes(",")) {
+      const token = t.split(", ");
+      return { isFormular: true, str: token };
+    }
+  } else
+    return {
+      isFormular: false,
+      str: str,
+    };
 }
