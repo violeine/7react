@@ -10,14 +10,16 @@ export function Cells() {
         <tbody>
           <tr>
             <th style={{ width: "30px" }}></th>
-            {[...Array(26)].map((_, i) => (
-              <th style={{ width: "92px" }}>{String.fromCharCode(i + 97)}</th>
+            {[...Array(5)].map((_, i) => (
+              <th style={{ width: "92px" }} key={i}>
+                {String.fromCharCode(i + 97)}
+              </th>
             ))}
           </tr>
-          {[...Array(100).keys()].map((el) => (
+          {[...Array(10).keys()].map((el) => (
             <tr key={el}>
               <td>{el}</td>
-              {[...Array(26)].map((_, i) => (
+              {[...Array(5)].map((_, i) => (
                 <Cell
                   row={el}
                   col={i}
@@ -80,6 +82,7 @@ function Cell({ row, col, cells, setCells }) {
       }
     } else return;
   }, [cells, formula]);
+
   function handleChange(e) {
     setInput(e.target.value);
   }
